@@ -23,9 +23,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Fixture Mundial 2026",
+  title: "PRODE EMPRESAS DEMO",
   description:
-    "Fixture interactivo del Mundial 2026 con grupos, mejores terceros y cuadro final compartible.",
+    "Demo corporativa para mostrar el prode interactivo con grupos, rankings y cuadro final compartible.",
 };
 
 export default function RootLayout({

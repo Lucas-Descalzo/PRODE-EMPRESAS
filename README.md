@@ -1,4 +1,4 @@
-# Fixture Mundial 2026
+# PRODE EMPRESAS DEMO
 
 Aplicacion web interactiva para armar predicciones del Mundial 2026, crear grupos de amigos, guardar fixtures y comparar rankings cuando se cargan resultados reales.
 
