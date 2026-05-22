@@ -1690,6 +1690,129 @@
   border-radius: 1.2rem;
 }
 
+.landingTopBar {
+  position: sticky;
+  top: 0.75rem;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.85rem 1rem;
+  border-radius: 1.2rem;
+  border: 1px solid rgba(137, 151, 190, 0.16);
+  background: rgba(8, 12, 23, 0.82);
+  backdrop-filter: blur(22px);
+  box-shadow: 0 20px 60px rgba(2, 8, 20, 0.24);
+}
+
+.landingTopBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
+  text-decoration: none;
+  color: #f7f8ff;
+  font-family: var(--font-heading);
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.landingTopBrand span {
+  white-space: nowrap;
+}
+
+.landingTopNav,
+.landingTopActions,
+.landingPillRow,
+.landingInfoTop {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.landingTopNav {
+  justify-content: center;
+}
+
+.landingTopNav a {
+  color: rgba(245, 248, 255, 0.74);
+  font-size: 0.92rem;
+  font-weight: 700;
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.landingTopNav a:hover {
+  color: #f7f8ff;
+}
+
+.landingTopActions {
+  justify-content: flex-end;
+}
+
+.landingCountdownStrip,
+.landingInfoSection {
+  border-radius: 1.7rem;
+  border: 1px solid rgba(137, 151, 190, 0.16);
+  box-shadow: 0 20px 60px rgba(2, 8, 20, 0.24);
+}
+
+.landingCountdownStrip {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  background: linear-gradient(120deg, rgba(60, 149, 255, 0.94), rgba(92, 93, 234, 0.94));
+  color: #071016;
+}
+
+.landingCountdownLabel {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.landingCountdownLabel strong {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.1;
+}
+
+.landingCountdownLabel span {
+  color: rgba(7, 16, 22, 0.78);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.landingCountdownGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.landingCountdownUnit {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.8rem 0.75rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.16);
+  text-align: center;
+}
+
+.landingCountdownUnit strong {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  line-height: 0.9;
+}
+
+.landingCountdownUnit span {
+  color: rgba(7, 16, 22, 0.78);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .landingHero,
 .fixtureIntro {
   display: grid;
@@ -1741,6 +1864,18 @@
   margin: 0 auto;
 }
 
+.landingPill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.42rem 0.78rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(245, 248, 255, 0.76);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
 .landingSteps {
   align-content: start;
 }
@@ -1786,6 +1921,113 @@
   max-width: 58rem;
   width: 100%;
   margin: 0 auto;
+}
+
+.landingInfoSection {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: rgba(8, 12, 23, 0.78);
+}
+
+.landingSectionHeader,
+.landingInfoCard,
+.landingScoringCard {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.landingSectionHeader h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  line-height: 1.02;
+}
+
+.landingSectionHeader p:last-child,
+.landingInfoCard span,
+.landingInfoCard li,
+.landingScoringCard li,
+.landingFaqItem p {
+  color: rgba(245, 248, 255, 0.72);
+  line-height: 1.55;
+}
+
+.landingInfoGrid,
+.landingScoringGrid,
+.landingFaqGrid {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.landingInfoCard,
+.landingScoringCard,
+.landingFaqItem {
+  padding: 1rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.landingInfoCardFeatured {
+  background:
+    radial-gradient(circle at top left, rgba(126, 245, 222, 0.12), transparent 35%),
+    rgba(255, 255, 255, 0.05);
+  border-color: rgba(126, 245, 222, 0.18);
+}
+
+.landingInfoTop {
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.landingInfoTop strong,
+.landingScoringCard strong {
+  font-size: 1.15rem;
+}
+
+.landingInfoTop em {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(126, 245, 222, 0.12);
+  border: 1px solid rgba(126, 245, 222, 0.24);
+  color: #7ef5de;
+  font-size: 0.68rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.landingInfoList {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.landingScoringEyebrow {
+  margin: 0;
+  color: #7ef5de;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.landingFaqItem summary {
+  cursor: pointer;
+  list-style: none;
+  font-weight: 800;
+}
+
+.landingFaqItem summary::-webkit-details-marker {
+  display: none;
+}
+
+.landingFaqItem p {
+  margin: 0.8rem 0 0;
 }
 
 .demoRankingPreview {
@@ -2391,6 +2633,15 @@
 }
 
 @media (min-width: 760px) {
+  .landingTopBar {
+    flex-wrap: nowrap;
+  }
+
+  .landingCountdownStrip {
+    grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
+    align-items: center;
+  }
+
   .landingHero {
     padding-block: clamp(3.5rem, 8vw, 6rem);
   }
@@ -2398,6 +2649,15 @@
   .demoRankingPreviewHeader {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: end;
+  }
+
+  .landingInfoGrid,
+  .landingScoringGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .landingFaqGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .landingSocialGrid {
@@ -2441,6 +2701,10 @@
 }
 
 @media (min-width: 1120px) {
+  .landingScoringGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .groupGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
