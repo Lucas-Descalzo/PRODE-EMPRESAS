@@ -211,26 +211,6 @@ export function FixtureBuilder({
     });
   };
 
-  const setGroupPredictionMode = (
-    groupId: GroupId,
-    mode: "manual" | "matches",
-  ) => {
-    if (readOnly) {
-      return;
-    }
-
-    const nextModes = { ...fixtureState.groupPredictionModes };
-    if (mode === "matches") {
-      nextModes[groupId] = "matches";
-    } else {
-      delete nextModes[groupId];
-    }
-
-    updateState({
-      groupPredictionModes: nextModes,
-    });
-  };
-
   const pickGroupMatchPrediction = (
     matchId: GroupMatchId,
     prediction: GroupMatchPrediction,
@@ -289,7 +269,7 @@ export function FixtureBuilder({
       updateState({
         groupOrders: fresh.groupOrders,
         groupMatchPredictions: {},
-        groupPredictionModes: {},
+        groupPredictionModes: fresh.groupPredictionModes,
         qualifiedThirdPlaces: [],
         thirdPlaceAssignments: {},
         knockoutWinners: {},
@@ -407,8 +387,12 @@ export function FixtureBuilder({
   const isGroupEdited = (groupId: GroupId): boolean => {
     const current = fixtureState.groupOrders[groupId];
     const defaultOrder = DEFAULT_GROUP_ORDERS[groupId];
+    const groupMatches = getGroupMatchDefinitions(groupId);
+    const hasPredictions = groupMatches.some(
+      (match) => fixtureState.groupMatchPredictions[match.id],
+    );
     return (
-      fixtureState.groupPredictionModes[groupId] === "matches" ||
+      hasPredictions ||
       current.some((teamId, i) => teamId !== defaultOrder[i])
     );
   };
@@ -440,12 +424,12 @@ export function FixtureBuilder({
         <div className={styles.sectionHeader}>
           <div>
             <p className={styles.sectionEyebrow}>Paso 1</p>
-            <h2>{readOnly ? "Orden final de los grupos" : "Ordená los grupos"}</h2>
+            <h2>{readOnly ? "Fase de grupos guardada" : "Juga la fase de grupos"}</h2>
           </div>
           <p className={styles.sectionHint}>
             {readOnly
-              ? "Tocá un grupo para ver el orden final guardado."
-              : `${groups.filter((g) => isGroupEdited(g.id)).length}/${groups.length} grupos editados`}
+              ? "Abri cada grupo para revisar las predicciones guardadas y el orden final."
+              : `${groups.filter((g) => isGroupEdited(g.id)).length}/${groups.length} grupos con predicciones o ajustes`}
           </p>
         </div>
 
@@ -473,7 +457,7 @@ export function FixtureBuilder({
           {filteredGroups.map((group) => {
             const isExpanded = !useAccordion || expandedGroup === group.id;
             const edited = isGroupEdited(group.id);
-            const isMatchMode = fixtureState.groupPredictionModes[group.id] === "matches";
+            const isMatchMode = true;
             const groupMatches = getGroupMatchDefinitions(group.id);
             const groupTableRows = getGroupTableRows(
               group.id,
@@ -562,29 +546,6 @@ export function FixtureBuilder({
                         useAccordion ? styles.groupExpandedContent : styles.groupTeams
                       }
                     >
-                      {!readOnly ? (
-                        <div className={styles.groupModeBar}>
-                          <button
-                            type="button"
-                            className={`${styles.groupModeButton} ${
-                              !isMatchMode ? styles.groupModeButtonActive : ""
-                            }`}
-                            onClick={() => setGroupPredictionMode(group.id, "manual")}
-                          >
-                            Ordenar manualmente
-                          </button>
-                          <button
-                            type="button"
-                            className={`${styles.groupModeButton} ${
-                              isMatchMode ? styles.groupModeButtonActive : ""
-                            }`}
-                            onClick={() => setGroupPredictionMode(group.id, "matches")}
-                          >
-                            Predecir por partidos
-                          </button>
-                        </div>
-                      ) : null}
-
                       {isMatchMode ? (
                         <div className={styles.groupMatchPanel}>
                           <div className={styles.groupMatchHeader}>
@@ -1216,3 +1177,4 @@ export function FixtureBuilder({
     </>
   );
 }
+

@@ -1,0 +1,279 @@
+.pageShell {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.heroCard,
+.summaryGrid article,
+.leaderboardCard,
+.legendCard,
+.emptyCard {
+  border: 1px solid rgba(137, 151, 190, 0.16);
+  background: rgba(8, 12, 23, 0.82);
+  box-shadow: 0 20px 60px rgba(2, 8, 20, 0.24);
+}
+
+.heroCard,
+.leaderboardCard,
+.legendCard,
+.emptyCard {
+  display: grid;
+  gap: 1rem;
+  padding: 1.4rem;
+  border-radius: 1.7rem;
+}
+
+.heroCard {
+  background:
+    radial-gradient(circle at top left, rgba(29, 240, 164, 0.18), transparent 30%),
+    radial-gradient(circle at 82% 18%, rgba(255, 179, 71, 0.18), transparent 28%),
+    linear-gradient(135deg, rgba(10, 15, 27, 0.96), rgba(7, 10, 19, 0.92));
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #7ef5de;
+}
+
+.heroCard h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 0.96;
+}
+
+.heroCard p,
+.legendCard p,
+.emptyCard p,
+.leaderboardHint,
+.rowMeta,
+.rowSummary small,
+.breakdownCard span {
+  margin: 0;
+  color: rgba(245, 248, 255, 0.72);
+  line-height: 1.55;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.primaryAction,
+.secondaryAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.85rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: 999px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.primaryAction {
+  background: linear-gradient(135deg, var(--cta-from), var(--cta-to));
+  color: #071016;
+}
+
+.secondaryAction {
+  color: #f7f8ff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.primaryAction:hover,
+.secondaryAction:hover,
+.rowSummary:hover {
+  transform: translateY(-1px);
+}
+
+.summaryGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+.summaryGrid article {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1rem;
+  border-radius: 1.2rem;
+}
+
+.summaryGrid strong {
+  font-size: 1.9rem;
+  line-height: 1;
+}
+
+.summaryLabel {
+  color: rgba(245, 248, 255, 0.62);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.leaderboardCard {
+  gap: 1rem;
+}
+
+.leaderboardHeader {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.leaderboardHeader h2 {
+  margin: 0;
+  font-size: clamp(1.45rem, 3vw, 2.2rem);
+}
+
+.leaderboardList {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.rowCard {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.035);
+  overflow: hidden;
+}
+
+.rowCard[open] {
+  border-color: rgba(126, 245, 222, 0.2);
+  box-shadow: 0 0 0 1px rgba(126, 245, 222, 0.08);
+}
+
+.currentRow {
+  border-color: rgba(126, 245, 222, 0.28);
+  background:
+    radial-gradient(circle at top left, rgba(126, 245, 222, 0.12), transparent 34%),
+    rgba(255, 255, 255, 0.04);
+}
+
+.rowSummary {
+  list-style: none;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.85rem;
+  align-items: center;
+  padding: 0.95rem 1rem;
+  cursor: pointer;
+}
+
+.rowSummary::-webkit-details-marker {
+  display: none;
+}
+
+.rowRank {
+  display: grid;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f7f8ff;
+  font-weight: 900;
+}
+
+.topRank {
+  background: linear-gradient(135deg, #f0b429, #ffd77a);
+  color: #071016;
+}
+
+.rowIdentity {
+  display: grid;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.rowIdentity strong {
+  font-size: 1rem;
+}
+
+.currentBadge {
+  display: inline-flex;
+  inline-size: fit-content;
+  padding: 0.16rem 0.52rem;
+  border-radius: 999px;
+  background: rgba(126, 245, 222, 0.12);
+  border: 1px solid rgba(126, 245, 222, 0.28);
+  color: #7ef5de;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rowMeta {
+  font-size: 0.82rem;
+}
+
+.rowSummary b {
+  font-size: 1.35rem;
+  text-align: right;
+}
+
+.rowSummary small {
+  display: block;
+  text-align: right;
+  font-size: 0.78rem;
+}
+
+.rowBody {
+  display: grid;
+  gap: 0.9rem;
+  padding: 0 1rem 1rem;
+}
+
+.rowNote {
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(245, 248, 255, 0.74);
+}
+
+.breakdownGrid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.breakdownCard {
+  display: grid;
+  gap: 0.12rem;
+  padding: 0.85rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.breakdownCard strong {
+  font-size: 1.3rem;
+}
+
+.legendList {
+  display: grid;
+  gap: 0.55rem;
+  padding-left: 1rem;
+  margin: 0;
+  color: rgba(245, 248, 255, 0.76);
+}
+
+.legendList li {
+  line-height: 1.5;
+}
+
+@media (min-width: 760px) {
+  .summaryGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .breakdownGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

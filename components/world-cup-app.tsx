@@ -305,18 +305,11 @@ export function WorldCupApp() {
                     Copiar link
                   </button>
                   <Link
-                    href="/ligas/general"
+                    href="/ranking"
                     className={styles.secondaryAction}
                     onClick={persistBeforeLeaving}
                   >
-                    Participar en Liga general
-                  </Link>
-                  <Link
-                    href="/ligas/crear"
-                    className={styles.secondaryAction}
-                    onClick={persistBeforeLeaving}
-                  >
-                    Crear Liga de amigos
+                    Ver ranking demo
                   </Link>
                 </>
               )}
@@ -328,3 +321,5 @@ export function WorldCupApp() {
     </div>
   );
 }
+
+
