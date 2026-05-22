@@ -15,41 +15,35 @@ export function ScoringExplainer({ compact = false, enabled = true }: ScoringExp
         <span>
           {enabled
             ? "Como funciona el sistema de puntos"
-            : "Sistema de puntos no activo en este grupo"}
+            : "El sistema de puntos no esta activo en este grupo"}
         </span>
       </summary>
 
       <div className={styles.scoringExplainerBody}>
         {!enabled ? (
           <div className={styles.scoringExplainerNotice}>
-            Este grupo guarda fixtures, pero no muestra ranking por puntos. Lucas puede
-            activarlo desde el panel admin si quieren competir con esta regla.
+            Este grupo puede guardar fixtures, pero no mostrar ranking por puntos.
           </div>
         ) : null}
 
         <div>
-          <strong>Fase de grupos</strong>
+          <strong>Grupos</strong>
           <p>
-            +1 por cada seleccion que pronosticaste clasificada a 16avos y
-            efectivamente clasifico. Si ademas acertaste su puesto exacto en el
-            grupo, suma +2 extra.
+            Cada equipo en el puesto exacto suma +2. Si acertaste que un equipo terminaba en el
+            top 2, pero invertiste el 1-2, suma +1.
           </p>
         </div>
 
         <div>
-          <strong>Supervivencia en eliminatorias</strong>
-          <p>
-            Se compara que equipos llegan a cada instancia, sin importar el cruce
-            exacto: 16avos +1, octavos +2, cuartos +3, semifinales +5 y finalistas
-            +7 por equipo acertado.
-          </p>
+          <strong>Mejores terceros</strong>
+          <p>Cada tercero seleccionado que efectivamente avance a 16avos suma +2.</p>
         </div>
 
         <div>
-          <strong>Bonus finales</strong>
+          <strong>Eliminatoria</strong>
           <p>
-            Final exacta +3, campeon +10 y ganador del tercer puesto +3. El ranking
-            se actualiza cuando Lucas carga resultados reales desde el admin.
+            Se puntua por cruce acertado: 16avos +2, octavos +4, cuartos +6, semifinales +8,
+            tercer puesto +8 y final +10.
           </p>
         </div>
       </div>

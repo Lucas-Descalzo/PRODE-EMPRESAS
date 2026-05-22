@@ -152,7 +152,7 @@ export function createInitialFixtureState(): FixtureState {
     ) as FixtureState["groupOrders"],
     groupMatchPredictions: {},
     groupPredictionModes: Object.fromEntries(
-      groups.map((group) => [group.id, "matches"]),
+      groups.map((group) => [group.id, "manual"]),
     ) as FixtureState["groupPredictionModes"],
     qualifiedThirdPlaces: [],
     thirdPlaceAssignments: {},
@@ -259,7 +259,7 @@ export function sanitizeGroupPredictionModes(
   const sanitized: Partial<Record<GroupId, GroupPredictionMode>> = {};
 
   for (const groupId of GROUP_IDS) {
-    sanitized[groupId] = "matches";
+    sanitized[groupId] = incoming?.[groupId] === "matches" ? "matches" : "manual";
   }
 
   return sanitized;

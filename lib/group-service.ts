@@ -187,19 +187,7 @@ function buildRanking(entries: EntryRecord[], officialState: FixtureState | null
         entryId: entry.id,
         displayName: formatDisplayName(entry.firstName, entry.lastName),
         updatedAt: entry.updatedAt,
-        groupClassificationPoints: score.groupClassificationPoints,
-        groupExactPositionPoints: score.groupExactPositionPoints,
-        roundOf32Points: score.roundOf32Points,
-        roundOf16Points: score.roundOf16Points,
-        quarterFinalPoints: score.quarterFinalPoints,
-        semiFinalPoints: score.semiFinalPoints,
-        finalistPoints: score.finalistPoints,
-        exactFinalBonus: score.exactFinalBonus,
-        championBonus: score.championBonus,
-        thirdPlaceBonus: score.thirdPlaceBonus,
-        total: score.total,
-        scoredUnits: score.scoredUnits,
-        pendingUnits: score.pendingUnits,
+        ...score,
       };
     })
     .sort((left, right) => {

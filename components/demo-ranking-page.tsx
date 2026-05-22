@@ -1,117 +1,87 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
 
 import {
-  buildDemoLeaderboard,
-  getDemoScoringLegend,
+  getDemoLeaderboard,
   type DemoLeaderboardRow,
 } from "@/lib/demo-ranking";
-import { decodeFixtureState, FIXTURE_STORAGE_KEY } from "@/lib/world-cup-state";
 
 import styles from "./demo-ranking.module.css";
 
 function getBreakdownItems(row: DemoLeaderboardRow) {
   return [
     {
-      label: "Clasificacion de grupos",
-      value: row.groupClassificationPoints,
-      help: "Equipos que metiste en 16avos.",
-    },
-    {
-      label: "Puestos exactos",
+      label: "Posiciones exactas",
       value: row.groupExactPositionPoints,
-      help: "Primeros, segundos y terceros en su lugar correcto.",
+      help: "Equipos ubicados en su puesto final correcto.",
     },
     {
-      label: "16avos",
-      value: row.roundOf32Points,
-      help: "Equipos que seguis teniendo vivos al pasar la fase de grupos.",
+      label: "Top 2 en otro orden",
+      value: row.groupTopTwoPoints,
+      help: "Clasificados bien detectados aunque el 1-2 haya quedado invertido.",
     },
     {
-      label: "Octavos",
-      value: row.roundOf16Points,
-      help: "Supervivencia acertada en octavos.",
+      label: "Mejores terceros",
+      value: row.bestThirdPoints,
+      help: "Terceros que elegiste y efectivamente avanzan.",
+    },
+    {
+      label: "16avos y octavos",
+      value: row.roundOf32Points + row.roundOf16Points,
+      help: "Cruces acertados en la primera mitad del cuadro.",
     },
     {
       label: "Cuartos y semis",
       value: row.quarterFinalPoints + row.semiFinalPoints,
-      help: "Puntos por seguir avanzando en el cuadro.",
+      help: "Picks correctos en las instancias decisivas.",
     },
     {
-      label: "Final y bonus",
-      value: row.finalistPoints + row.exactFinalBonus + row.championBonus + row.thirdPlaceBonus,
-      help: "Finalistas, campeon y tercer puesto.",
+      label: "Tercer puesto y final",
+      value: row.thirdPlaceMatchPoints + row.finalPoints,
+      help: "Ultimos dos partidos del torneo.",
     },
   ];
 }
 
 export function DemoRankingPage() {
-  const [rows, setRows] = useState<DemoLeaderboardRow[]>(() => buildDemoLeaderboard());
-  const [hasCurrentPrediction, setHasCurrentPrediction] = useState(false);
-  const scoringLegend = useMemo(() => getDemoScoringLegend(), []);
-  const currentRow = rows.find((row) => row.isCurrentUser);
-  const currentPosition = currentRow
-    ? rows.findIndex((row) => row.entryId === currentRow.entryId) + 1
-    : null;
-
-  useEffect(() => {
-    const encoded = window.localStorage.getItem(FIXTURE_STORAGE_KEY);
-    const currentPrediction = decodeFixtureState(encoded);
-
-    if (!currentPrediction) {
-      setRows(buildDemoLeaderboard());
-      setHasCurrentPrediction(false);
-      return;
-    }
-
-    setRows(buildDemoLeaderboard(currentPrediction));
-    setHasCurrentPrediction(true);
-  }, []);
+  const rows = getDemoLeaderboard();
 
   return (
     <main className={styles.pageShell}>
       <section className={styles.heroCard}>
-        <p className={styles.eyebrow}>Ranking interno demo</p>
-        <h1>Asi podria verse el ranking para tus clientes</h1>
+        <p className={styles.eyebrow}>Ranking de muestra</p>
+        <h1>Una vista simple del ranking interno</h1>
         <p>
-          Esta vista usa participantes de ejemplo y resultados parciales cargados en el admin.
-          Si ya armaste tu prediccion, tambien la comparamos para mostrarte en que posicion
-          quedarias.
+          Esta pagina muestra como se veria la tabla de posiciones en una empresa usando el modo
+          simple: grupos, mejores terceros y cuadro completo cargados antes del Mundial.
         </p>
 
         <div className={styles.heroActions}>
           <Link href="/mi-prediccion" className={styles.primaryAction}>
-            Volver a mi prediccion
+            Ver la plataforma
           </Link>
           <Link href="/" className={styles.secondaryAction}>
-            Ir al inicio
+            Volver al inicio
           </Link>
         </div>
       </section>
 
       <section className={styles.summaryGrid}>
         <article>
-          <p className={styles.summaryLabel}>Participantes demo</p>
+          <p className={styles.summaryLabel}>Participantes</p>
           <strong>{rows.length}</strong>
-          <span>Incluye ejemplos y, si existe, tu prediccion actual.</span>
+          <span>Ejemplos cargados para mostrar formato, puntaje y orden.</span>
         </article>
         <article>
-          <p className={styles.summaryLabel}>Progreso del scoring</p>
-          <strong>
-            {scoringLegend.scoredUnits}/{scoringLegend.totalUnits}
-          </strong>
-          <span>Unidades ya puntuadas con resultados de ejemplo.</span>
+          <p className={styles.summaryLabel}>Modo</p>
+          <strong>Simple</strong>
+          <span>Pre-Mundial, con cuadro completo y ranking por etapas.</span>
         </article>
         <article>
-          <p className={styles.summaryLabel}>Tu posicion</p>
-          <strong>{currentPosition ?? "--"}</strong>
-          <span>
-            {hasCurrentPrediction
-              ? "Actualizada con la prediccion guardada en este navegador."
-              : "Completa tu prediccion para comparar tu lugar en el ranking."}
-          </span>
+          <p className={styles.summaryLabel}>Puntaje maximo</p>
+          <strong>234 pts</strong>
+          <span>112 del pre-Mundial y 122 de eliminatoria.</span>
         </article>
       </section>
 
@@ -120,42 +90,41 @@ export function DemoRankingPage() {
           <p className={styles.eyebrow}>Tabla de posiciones</p>
           <h2>Ranking general</h2>
           <p className={styles.leaderboardHint}>
-            Cada fila se puede abrir para ver de donde vienen los puntos. Para una empresa,
-            esta es la profundidad justa: claridad para todos sin volver la experiencia pesada.
+            Cada fila se despliega para mostrar de donde sale el puntaje sin sobrecargar la
+            pantalla principal.
           </p>
         </div>
 
         <div className={styles.leaderboardList}>
           {rows.map((row, index) => (
-            <details
-              key={row.entryId}
-              className={`${styles.rowCard} ${row.isCurrentUser ? styles.currentRow : ""}`}
-              open={Boolean(row.isCurrentUser)}
-            >
+            <details key={row.entryId} className={styles.rowCard}>
               <summary className={styles.rowSummary}>
-                <span
-                  className={`${styles.rowRank} ${index < 3 ? styles.topRank : ""}`}
-                >
+                <span className={`${styles.rowRank} ${index < 3 ? styles.topRank : ""}`}>
                   {index + 1}
                 </span>
 
                 <div className={styles.rowIdentity}>
                   <strong>{row.displayName}</strong>
-                  {row.isCurrentUser ? <span className={styles.currentBadge}>Tu demo</span> : null}
                   <span className={styles.rowMeta}>{row.department}</span>
                 </div>
 
                 <div>
                   <b>{row.total} pts</b>
                   <small>
-                    {row.scoredUnits}/{scoringLegend.totalUnits} unidades puntuadas
+                    {row.groupExactPositionPoints + row.groupTopTwoPoints + row.bestThirdPoints}{" "}
+                    pre-Mundial +{" "}
+                    {row.roundOf32Points +
+                      row.roundOf16Points +
+                      row.quarterFinalPoints +
+                      row.semiFinalPoints +
+                      row.thirdPlaceMatchPoints +
+                      row.finalPoints}{" "}
+                    cuadro
                   </small>
                 </div>
               </summary>
 
               <div className={styles.rowBody}>
-                {row.note ? <p className={styles.rowNote}>{row.note}</p> : null}
-
                 <div className={styles.breakdownGrid}>
                   {getBreakdownItems(row).map((item) => (
                     <article key={item.label} className={styles.breakdownCard}>
@@ -170,29 +139,6 @@ export function DemoRankingPage() {
           ))}
         </div>
       </section>
-
-      <section className={styles.legendCard}>
-        <p className={styles.eyebrow}>Recomendacion de producto</p>
-        <p>
-          Para venderlo a empresas, conviene mostrar el desglose por etapas para todos y dejar
-          el detalle partido por partido solo para la vista personal o admin.
-        </p>
-        <ul className={styles.legendList}>
-          <li>Publico general: total de puntos y desglose por fase.</li>
-          <li>Jugador propio: detalle mas fino de donde sumo y donde dejo puntos.</li>
-          <li>Admin: acceso completo si despues quieren auditar resultados o reglas.</li>
-        </ul>
-      </section>
-
-      {!hasCurrentPrediction ? (
-        <section className={styles.emptyCard}>
-          <p className={styles.eyebrow}>Tu lugar</p>
-          <p>
-            Cuando completes tu prediccion en esta demo, la vamos a mezclar automaticamente con
-            el ranking para que puedas mostrar una experiencia mas real.
-          </p>
-        </section>
-      ) : null}
     </main>
   );
 }

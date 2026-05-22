@@ -9,8 +9,6 @@ import type { FixtureState, GroupId, MatchId } from "@/lib/world-cup-types";
 
 export interface DemoLeaderboardRow extends RankingRow {
   department: string;
-  isCurrentUser?: boolean;
-  note?: string;
 }
 
 interface DemoParticipant {
@@ -20,7 +18,9 @@ interface DemoParticipant {
   fixtureState: FixtureState;
 }
 
-type GroupOrderMap = Partial<Record<GroupId, [0 | 1 | 2 | 3, 0 | 1 | 2 | 3, 0 | 1 | 2 | 3, 0 | 1 | 2 | 3]>>;
+type GroupOrderMap = Partial<
+  Record<GroupId, [0 | 1 | 2 | 3, 0 | 1 | 2 | 3, 0 | 1 | 2 | 3, 0 | 1 | 2 | 3]>
+>;
 type KnockoutPick = [MatchId, "A" | "B"];
 
 const OFFICIAL_THIRD_GROUPS: GroupId[] = ["A", "C", "D", "E", "G", "I", "J", "L"];
@@ -71,13 +71,15 @@ const OFFICIAL_KNOCKOUT_PICKS: KnockoutPick[] = [
   ["M100", "B"],
 ];
 
-function reorderGroups(
-  state: FixtureState,
-  overrides: GroupOrderMap,
-) {
+function reorderGroups(state: FixtureState, overrides: GroupOrderMap) {
   const nextOrders = { ...state.groupOrders };
 
-  for (const [groupId, order] of Object.entries(overrides) as Array<[GroupId, [0 | 1 | 2 | 3, 0 | 1 | 2 | 3, 0 | 1 | 2 | 3, 0 | 1 | 2 | 3]]>) {
+  for (const [groupId, order] of Object.entries(overrides) as Array<
+    [
+      GroupId,
+      [0 | 1 | 2 | 3, 0 | 1 | 2 | 3, 0 | 1 | 2 | 3, 0 | 1 | 2 | 3],
+    ]
+  >) {
     const baseOrder = state.groupOrders[groupId];
     nextOrders[groupId] = order.map((index) => baseOrder[index]);
   }
@@ -95,10 +97,7 @@ function selectThirdGroups(state: FixtureState, groups: GroupId[]) {
   });
 }
 
-function applyKnockoutPicks(
-  state: FixtureState,
-  picks: KnockoutPick[],
-) {
+function applyKnockoutPicks(state: FixtureState, picks: KnockoutPick[]) {
   let nextState = state;
 
   for (const [matchId, side] of picks) {
@@ -248,9 +247,7 @@ const demoParticipants: DemoParticipant[] = [
   },
 ];
 
-function toLeaderboardRow(
-  participant: DemoParticipant,
-): DemoLeaderboardRow {
+function toLeaderboardRow(participant: DemoParticipant): DemoLeaderboardRow {
   const score = scoreFixture(participant.fixtureState, demoOfficialFixtureState);
 
   return {
@@ -262,61 +259,32 @@ function toLeaderboardRow(
   };
 }
 
-function sortRows(
-  rows: DemoLeaderboardRow[],
-) {
+function sortRows(rows: DemoLeaderboardRow[]) {
   return [...rows].sort((left, right) => {
     if (right.total !== left.total) {
       return right.total - left.total;
     }
 
-    if (right.scoredUnits !== left.scoredUnits) {
-      return right.scoredUnits - left.scoredUnits;
+    if (right.finalPoints !== left.finalPoints) {
+      return right.finalPoints - left.finalPoints;
+    }
+
+    if (right.semiFinalPoints !== left.semiFinalPoints) {
+      return right.semiFinalPoints - left.semiFinalPoints;
+    }
+
+    if (right.groupExactPositionPoints !== left.groupExactPositionPoints) {
+      return right.groupExactPositionPoints - left.groupExactPositionPoints;
     }
 
     return left.displayName.localeCompare(right.displayName, "es");
   });
 }
 
-export function getDemoLeaderboardBase() {
+export function getDemoLeaderboard() {
   return sortRows(demoParticipants.map(toLeaderboardRow));
 }
 
-export function scoreCurrentDemoPrediction(
-  fixtureState: FixtureState,
-): DemoLeaderboardRow {
-  const score = scoreFixture(fixtureState, demoOfficialFixtureState);
-
-  return {
-    entryId: "current-user",
-    displayName: "Tu prediccion",
-    updatedAt: new Date().toISOString(),
-    department: "Demo personal",
-    isCurrentUser: true,
-    note: "Comparada contra resultados de ejemplo ya cargados en el admin.",
-    ...score,
-  };
-}
-
-export function buildDemoLeaderboard(
-  currentPrediction?: FixtureState | null,
-) {
-  const rows = getDemoLeaderboardBase();
-
-  if (!currentPrediction) {
-    return rows;
-  }
-
-  return sortRows([...rows, scoreCurrentDemoPrediction(currentPrediction)]);
-}
-
 export function getDemoLeaderboardPreview(limit = 5) {
-  return getDemoLeaderboardBase().slice(0, limit);
-}
-
-export function getDemoScoringLegend() {
-  return {
-    scoredUnits: Object.keys(demoOfficialFixtureState.knockoutWinners).length + 48,
-    totalUnits: 80,
-  };
+  return getDemoLeaderboard().slice(0, limit);
 }

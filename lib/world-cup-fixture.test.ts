@@ -83,7 +83,7 @@ describe("world cup fixture engine", () => {
     const normalized = normalizeFixtureState(legacyState);
 
     expect(normalized.groupMatchPredictions).toEqual({});
-    expect(normalized.groupPredictionModes).toEqual({});
+    expect(normalized.groupPredictionModes.A).toBe("manual");
     expect(normalized.groupOrders.A).toEqual(initial.groupOrders.A);
   });
 

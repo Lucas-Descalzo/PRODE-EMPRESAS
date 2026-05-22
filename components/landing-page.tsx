@@ -44,41 +44,60 @@ export function LandingPage() {
             />
           </div>
 
-          <p className={styles.eyebrow}>Fixture Mundial 2026</p>
-          <h1 className={styles.heroTitle}>Arma tu fixture del Mundial 2026</h1>
+          <p className={styles.eyebrow}>Demo del modo simple</p>
+          <h1 className={styles.heroTitle}>Mostra la plataforma tal como la veria una empresa</h1>
           <p className={styles.heroCopy}>
-            Juga la fase de grupos partido por partido, defini los mejores terceros y completa
-            la eliminatoria por ganador directo en esta demo lista para presentar a empresas.
+            Esta demo reproduce la experiencia pre-Mundial: ordenar grupos, elegir los mejores
+            terceros, completar todo el cuadro y ver un ranking de muestra.
           </p>
 
           <div className={styles.heroActions}>
             <Link href="/mi-prediccion" className={styles.primaryAction}>
-              Armar mi prediccion
+              Ver la plataforma
             </Link>
             <Link href="/ranking" className={styles.secondaryAction}>
-              Ver ranking demo
+              Ver ranking de muestra
             </Link>
             {hasDraft ? (
               <Link href="/mi-prediccion" className={styles.secondaryAction}>
-                Continuar mi prediccion
+                Continuar demo
               </Link>
             ) : null}
           </div>
         </div>
       </section>
 
+      <section className={styles.landingSteps}>
+        <article>
+          <span>1</span>
+          <strong>Grupos</strong>
+          <p>La prediccion puntua por posicion final de cada grupo.</p>
+        </article>
+        <article>
+          <span>2</span>
+          <strong>Mejores terceros</strong>
+          <p>Se eligen los ocho terceros que avanzan a 16avos.</p>
+        </article>
+        <article>
+          <span>3</span>
+          <strong>Cuadro completo</strong>
+          <p>La eliminatoria se completa entera antes del inicio del torneo.</p>
+        </article>
+        <article>
+          <span>4</span>
+          <strong>Ranking</strong>
+          <p>La tabla muestra como se veria el resultado dentro de una empresa.</p>
+        </article>
+      </section>
+
       <section className={styles.demoRankingPreview}>
         <div className={styles.demoRankingPreviewHeader}>
           <div>
-            <p className={styles.sectionEyebrow}>Ranking interno</p>
-            <h2>Asi se veria la tabla de posiciones para una empresa</h2>
-            <p className={styles.heroCopy}>
-              Incluimos participantes de ejemplo para mostrar el look del ranking, el puntaje y
-              el desglose por etapas sin necesidad de cargar usuarios reales.
-            </p>
+            <p className={styles.sectionEyebrow}>Ranking de muestra</p>
+            <h2>Asi se ve la tabla interna para una empresa</h2>
           </div>
           <Link href="/ranking" className={styles.secondaryAction}>
-            Abrir ranking completo
+            Abrir ranking
           </Link>
         </div>
 
@@ -93,24 +112,21 @@ export function LandingPage() {
               <div className={styles.demoRankingPreviewPoints}>
                 <strong>{row.total} pts</strong>
                 <span>
-                  {row.groupClassificationPoints + row.groupExactPositionPoints} grupos +{" "}
+                  {row.groupExactPositionPoints + row.groupTopTwoPoints + row.bestThirdPoints}{" "}
+                  pre-Mundial +{" "}
                   {row.roundOf32Points +
                     row.roundOf16Points +
                     row.quarterFinalPoints +
-                    row.semiFinalPoints}{" "}
-                  knockout
+                    row.semiFinalPoints +
+                    row.thirdPlaceMatchPoints +
+                    row.finalPoints}{" "}
+                  cuadro
                 </span>
               </div>
             </article>
           ))}
         </div>
       </section>
-
-      <nav className={styles.landingSecondaryNav} aria-label="Paginas adicionales">
-        <Link href="/ranking">Ranking</Link>
-        <Link href="/calendario">Calendario</Link>
-        <Link href="/ayuda">Ayuda</Link>
-      </nav>
     </main>
   );
 }

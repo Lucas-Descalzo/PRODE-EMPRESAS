@@ -1,3 +1,4 @@
+import type { FixtureScoreBreakdown } from "@/lib/scoring";
 import type { FixtureState } from "@/lib/world-cup-types";
 
 export interface GroupRecord {
@@ -35,23 +36,10 @@ export interface GroupParticipant {
   fixtureState?: FixtureState;
 }
 
-export interface RankingRow {
+export interface RankingRow extends FixtureScoreBreakdown {
   entryId: string;
   displayName: string;
   updatedAt: string;
-  groupClassificationPoints: number;
-  groupExactPositionPoints: number;
-  roundOf32Points: number;
-  roundOf16Points: number;
-  quarterFinalPoints: number;
-  semiFinalPoints: number;
-  finalistPoints: number;
-  exactFinalBonus: number;
-  championBonus: number;
-  thirdPlaceBonus: number;
-  total: number;
-  scoredUnits: number;
-  pendingUnits: number;
 }
 
 export interface GroupPageData {

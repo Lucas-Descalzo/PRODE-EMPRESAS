@@ -136,6 +136,19 @@ export function FixtureBuilder({
     });
   };
 
+  const setGroupPredictionMode = (groupId: GroupId, mode: "manual" | "matches") => {
+    if (readOnly) {
+      return;
+    }
+
+    updateState({
+      groupPredictionModes: {
+        ...fixtureState.groupPredictionModes,
+        [groupId]: mode,
+      },
+    });
+  };
+
   const matches = deriveMatches(fixtureState).matchesById;
   const emptyMatches = createEmptyKnockoutMatches(matches);
   const champion = getChampion(matches);
@@ -424,12 +437,12 @@ export function FixtureBuilder({
         <div className={styles.sectionHeader}>
           <div>
             <p className={styles.sectionEyebrow}>Paso 1</p>
-            <h2>{readOnly ? "Fase de grupos guardada" : "Juga la fase de grupos"}</h2>
+            <h2>{readOnly ? "Fase de grupos guardada" : "Defini la fase de grupos"}</h2>
           </div>
           <p className={styles.sectionHint}>
             {readOnly
-              ? "Abri cada grupo para revisar las predicciones guardadas y el orden final."
-              : `${groups.filter((g) => isGroupEdited(g.id)).length}/${groups.length} grupos con predicciones o ajustes`}
+              ? "Abri cada grupo para revisar el orden final guardado."
+              : `${groups.filter((g) => isGroupEdited(g.id)).length}/${groups.length} grupos definidos o en curso`}
           </p>
         </div>
 
@@ -457,7 +470,7 @@ export function FixtureBuilder({
           {filteredGroups.map((group) => {
             const isExpanded = !useAccordion || expandedGroup === group.id;
             const edited = isGroupEdited(group.id);
-            const isMatchMode = true;
+            const isMatchMode = fixtureState.groupPredictionModes[group.id] === "matches";
             const groupMatches = getGroupMatchDefinitions(group.id);
             const groupTableRows = getGroupTableRows(
               group.id,
@@ -546,6 +559,29 @@ export function FixtureBuilder({
                         useAccordion ? styles.groupExpandedContent : styles.groupTeams
                       }
                     >
+                      {!readOnly ? (
+                        <div className={styles.groupModeBar}>
+                          <button
+                            type="button"
+                            className={`${styles.groupModeButton} ${
+                              !isMatchMode ? styles.groupModeButtonActive : ""
+                            }`}
+                            onClick={() => setGroupPredictionMode(group.id, "manual")}
+                          >
+                            Orden final
+                          </button>
+                          <button
+                            type="button"
+                            className={`${styles.groupModeButton} ${
+                              isMatchMode ? styles.groupModeButtonActive : ""
+                            }`}
+                            onClick={() => setGroupPredictionMode(group.id, "matches")}
+                          >
+                            Ayuda G/E/P
+                          </button>
+                        </div>
+                      ) : null}
+
                       {isMatchMode ? (
                         <div className={styles.groupMatchPanel}>
                           <div className={styles.groupMatchHeader}>

@@ -74,19 +74,11 @@ function getFixtureProgress(fixtureState: FixtureState) {
 
 function getStepStatus(step: Step, fixtureState: FixtureState, remainingKnockout: number) {
   switch (step) {
-    case 1: {
-      const matchModeGroups = Object.values(fixtureState.groupPredictionModes).filter(
-        (mode) => mode === "matches",
-      ).length;
-
+    case 1:
       return {
         label: "Paso actual: Grupos",
-        detail:
-          matchModeGroups > 0
-            ? `${matchModeGroups} grupos usando predicción por partidos`
-            : "Abrí un grupo para ordenar o predecir partidos",
+        detail: "Defini el orden final de cada grupo",
       };
-    }
     case 2:
       return {
         label: "Paso actual: Terceros",
@@ -103,7 +95,7 @@ function getStepStatus(step: Step, fixtureState: FixtureState, remainingKnockout
     case 4:
       return {
         label: "Paso actual: Resumen",
-        detail: "Revisá, compartí o exportá tu predicción",
+        detail: "Revisa, comparti o exporta tu prediccion",
       };
   }
 }
@@ -182,7 +174,7 @@ export function WorldCupApp() {
       await navigator.clipboard.writeText(persistedUrl.toString());
       setShareFeedback("Link copiado al portapapeles.");
     } catch {
-      setShareFeedback("No pude copiar el link automáticamente.");
+      setShareFeedback("No pude copiar el link automaticamente.");
     }
   };
 
@@ -192,7 +184,7 @@ export function WorldCupApp() {
       setFixtureState(createInitialFixtureState());
       setLoadSource("empty");
       goToStep(1);
-      setShareFeedback("Predicción reiniciada.");
+      setShareFeedback("Prediccion reiniciada.");
     });
   };
 
@@ -217,8 +209,8 @@ export function WorldCupApp() {
               className={styles.headerBrandLogo}
             />
             <div>
-              <strong>Mi predicción</strong>
-              <span>Mundial 2026</span>
+              <strong>Mi prediccion</strong>
+              <span>Demo simple</span>
             </div>
           </Link>
 
@@ -228,7 +220,7 @@ export function WorldCupApp() {
           </div>
 
           {hydrated ? (
-            <span className={styles.headerAutoSave}>● Guardado automáticamente</span>
+            <span className={styles.headerAutoSave}>● Guardado automaticamente</span>
           ) : null}
         </div>
 
@@ -236,7 +228,7 @@ export function WorldCupApp() {
           <span style={{ inlineSize: `${progress.percent}%` }} />
         </div>
 
-        <nav className={styles.progressSteps} aria-label="Pasos de Mi predicción">
+        <nav className={styles.progressSteps} aria-label="Pasos de Mi prediccion">
           {progress.steps.map((step) => (
             <button
               key={step.id}
@@ -255,16 +247,19 @@ export function WorldCupApp() {
           ))}
         </nav>
 
-        {(loadSource === "url" || (loadSource === "storage" && currentStep === 1) || returnTo || shareFeedback) ? (
+        {(loadSource === "url" ||
+          (loadSource === "storage" && currentStep === 1) ||
+          returnTo ||
+          shareFeedback) ? (
           <div className={styles.statusRow}>
             {loadSource === "url" ? (
-              <p className={styles.statusPill}>Abriste una predicción compartida.</p>
+              <p className={styles.statusPill}>Abriste una prediccion compartida.</p>
             ) : null}
             {loadSource === "storage" && currentStep === 1 ? (
-              <p className={styles.statusPill}>Recuperamos tu última predicción guardada.</p>
+              <p className={styles.statusPill}>Recuperamos tu ultima prediccion guardada.</p>
             ) : null}
             {returnTo ? (
-              <p className={styles.statusPill}>Cuando termines, podés volver a la liga.</p>
+              <p className={styles.statusPill}>Cuando termines, podes volver a la liga.</p>
             ) : null}
             {shareFeedback ? <p className={styles.statusPill}>{shareFeedback}</p> : null}
           </div>
@@ -272,54 +267,62 @@ export function WorldCupApp() {
       </header>
 
       <ViewTransition key={currentStep} enter="step-enter" exit="step-exit" default="none">
-      <div ref={stepContentRef} className={styles.stepContent}>
-        <FixtureBuilder
-          fixtureState={fixtureState}
-          onFixtureStateChange={setFixtureState}
-          currentStep={currentStep}
-          onStepChange={goToStep}
-          onResetAll={resetFixture}
-          onFeedback={announceFeedback}
-          summaryActions={
-            <div className={styles.summaryActionGrid}>
-              {!progress.isComplete ? (
-                <button
-                  type="button"
-                  className={styles.primaryAction}
-                  onClick={() => goToStep(nextIncompleteStep)}
-                >
-                  Continuar mi predicción
-                </button>
-              ) : (
-                <>
-                  {returnTo ? (
+        <div ref={stepContentRef} className={styles.stepContent}>
+          <FixtureBuilder
+            fixtureState={fixtureState}
+            onFixtureStateChange={setFixtureState}
+            currentStep={currentStep}
+            onStepChange={goToStep}
+            onResetAll={resetFixture}
+            onFeedback={announceFeedback}
+            beforeBuilder={
+              <section className={styles.fixtureIntro}>
+                <p className={styles.sectionEyebrow}>Modo simple</p>
+                <h1>La version de muestra que veria una empresa</h1>
+                <p>
+                  Esta demo recorre la experiencia pre-Mundial completa: grupos, mejores terceros,
+                  cuadro final y ranking.
+                </p>
+              </section>
+            }
+            summaryActions={
+              <div className={styles.summaryActionGrid}>
+                {!progress.isComplete ? (
+                  <button
+                    type="button"
+                    className={styles.primaryAction}
+                    onClick={() => goToStep(nextIncompleteStep)}
+                  >
+                    Continuar mi prediccion
+                  </button>
+                ) : (
+                  <>
+                    {returnTo ? (
+                      <Link
+                        href={returnTo}
+                        className={styles.primaryAction}
+                        onClick={persistBeforeLeaving}
+                      >
+                        Volver a la liga
+                      </Link>
+                    ) : null}
+                    <button type="button" className={styles.secondaryAction} onClick={copyShareUrl}>
+                      Copiar link
+                    </button>
                     <Link
-                      href={returnTo}
-                      className={styles.primaryAction}
+                      href="/ranking"
+                      className={styles.secondaryAction}
                       onClick={persistBeforeLeaving}
                     >
-                      Volver a la liga
+                      Ver ranking demo
                     </Link>
-                  ) : null}
-                  <button type="button" className={styles.secondaryAction} onClick={copyShareUrl}>
-                    Copiar link
-                  </button>
-                  <Link
-                    href="/ranking"
-                    className={styles.secondaryAction}
-                    onClick={persistBeforeLeaving}
-                  >
-                    Ver ranking demo
-                  </Link>
-                </>
-              )}
-            </div>
-          }
-        />
-      </div>
+                  </>
+                )}
+              </div>
+            }
+          />
+        </div>
       </ViewTransition>
     </div>
   );
 }
-
-
