@@ -44,8 +44,8 @@ export function LandingPage() {
           <p className={styles.eyebrow}>Fixture Mundial 2026</p>
           <h1 className={styles.heroTitle}>Armá tu fixture del Mundial 2026</h1>
           <p className={styles.heroCopy}>
-            Armá tu predicción del Mundial, compartila como imagen o usala
-            para competir en ligas.
+            Armá tu predicción del Mundial y compartila como imagen en esta
+            demo lista para presentar a empresas.
           </p>
 
           <div className={styles.heroActions}>
@@ -59,32 +59,6 @@ export function LandingPage() {
             ) : null}
           </div>
         </div>
-      </section>
-
-      <section className={styles.landingSocialGrid} aria-label="Acciones secundarias">
-        <article className={styles.groupLaunchCard}>
-          <p className={styles.sectionEyebrow}>Ranking público</p>
-          <h2>Competí en la Liga general</h2>
-          <p>
-            Guardá tu predicción individual y comparala con otros usuarios cuando
-            se carguen los resultados reales.
-          </p>
-          <Link href="/ligas/general" className={styles.secondaryAction}>
-            Ir a Liga general
-          </Link>
-        </article>
-
-        <article className={styles.groupLaunchCard}>
-          <p className={styles.sectionEyebrow}>Amigos</p>
-          <h2>Creá una liga</h2>
-          <p>
-            Compartí un link, definí una fecha límite y que cada participante use
-            su predicción sin crear cuenta.
-          </p>
-          <Link href="/ligas/crear" className={styles.secondaryAction}>
-            Crear liga
-          </Link>
-        </article>
       </section>
 
       <nav className={styles.landingSecondaryNav} aria-label="Páginas adicionales">
