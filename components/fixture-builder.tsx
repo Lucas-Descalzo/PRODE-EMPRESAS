@@ -577,7 +577,7 @@ export function FixtureBuilder({
                             }`}
                             onClick={() => setGroupPredictionMode(group.id, "matches")}
                           >
-                            Ayuda G/E/P
+                            Pronostico del grupo
                           </button>
                         </div>
                       ) : null}
@@ -1051,7 +1051,6 @@ export function FixtureBuilder({
               type="button"
               className={styles.primaryAction}
               onClick={() => onStepChange(4)}
-              disabled={!isKnockoutReady}
             >
               Ver resumen →
             </button>

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { getDemoLeaderboardPreview } from "@/lib/demo-ranking";
 
@@ -34,81 +34,46 @@ function getCountdown() {
 const playModes = [
   {
     title: "Modo Simple",
-    tag: "Visible en la demo",
     copy:
-      "La empresa completa toda la experiencia antes del Mundial: grupos, mejores terceros y cuadro final.",
+      "Se completa una sola vez antes del Mundial: grupos, mejores terceros y cuadro.",
     points: [
-      "La fase de grupos puntua por posicion final confirmada.",
-      "Los mejores terceros se eligen una sola vez antes del torneo.",
-      "La eliminatoria se completa entera por clasificado, sin marcador.",
+      "Despues cada uno sigue su posicion en el ranking durante el torneo.",
+      "Es la forma mas facil de sumar a todo el equipo.",
+      "Ideal para participar sin depender del dia a dia de cada partido.",
     ],
   },
   {
     title: "Modo Live",
-    tag: "Formato sugerido",
     copy:
-      "Mantiene el mismo pre-Mundial del modo simple, pero la eliminatoria se juega partido a partido durante el torneo.",
+      "Lo mismo antes del Mundial, pero la eliminatoria se sigue partido a partido, en vivo, durante todo el torneo.",
     points: [
-      "Comparte grupos y mejores terceros cargados antes del debut.",
-      "Cada cruce eliminatorio se habilita cuando queda confirmado.",
-      "Se vende comercialmente, pero no se muestra como flujo jugable en esta demo.",
-    ],
-  },
-];
-
-const scoringBlocks = [
-  {
-    title: "Pre-Mundial",
-    subtitle: "Base comun para ambos modos",
-    items: [
-      "Equipo en puesto exacto: +2",
-      "Top 2 correcto pero 1-2 invertido: +1",
-      "Cada mejor tercero acertado: +2",
-      "Maximo de esta etapa: 112 puntos",
-    ],
-  },
-  {
-    title: "Modo Simple",
-    subtitle: "Cuadro completo antes del torneo",
-    items: [
-      "16avos: +2 por clasificado acertado",
-      "Octavos: +4 por clasificado acertado",
-      "Cuartos: +6 por clasificado acertado",
-      "Semis: +8, tercer puesto: +8 y final: +10",
-    ],
-  },
-  {
-    title: "Modo Live",
-    subtitle: "Eliminatoria partido a partido",
-    items: [
-      "Solo resultado, ganador + diferencia o marcador exacto",
-      "Cada fase aumenta el valor del acierto",
-      "Si pronostica empate, tambien define quien clasifica",
-      "Pensado para generar mas dispersion en el ranking",
+      "Mantiene la conversacion activa semana a semana.",
+      "Cada cruce suma un nuevo momento para volver a jugar.",
+      "Extiende la experiencia durante todo el torneo.",
     ],
   },
 ];
 
 const faqItems = [
   {
-    question: "Que muestra exactamente esta demo?",
+    question: "Cuanto trabajo me da?",
     answer:
-      "Muestra la plataforma como la veria una empresa en el modo simple: home, flujo de prediccion, ranking de muestra y formato general del producto.",
+      "Cero. Nosotros configuramos, cargamos y operamos todo. Vos solo compartis el link con tu equipo.",
   },
   {
-    question: "El G/E/P suma puntos por si solo?",
+    question: "Puede jugar gente que no es fanatica del futbol?",
     answer:
-      "No. En grupos funciona como ayuda opcional para pensar el orden final. Lo que puntua realmente es la posicion final confirmada de cada equipo en su grupo.",
+      "Si. Se completa una vez y listo; no hace falta saber de futbol para participar.",
   },
   {
-    question: "Por que el modo live no se simula completo en la demo?",
+    question: "Lleva el logo y los colores de mi empresa?",
     answer:
-      "Porque antes del Mundial no existe una forma natural de navegar toda la eliminatoria live. Se explica como formato sugerido, pero la experiencia visible queda enfocada en el modo simple.",
+      "Si. La plataforma se personaliza con la identidad de tu marca.",
   },
   {
-    question: "Que se ve en el ranking?",
+    question: "Cuando conviene arrancar?",
     answer:
-      "Una tabla interna con nombres de ejemplo, puntaje total y desglose por etapas. Es la profundidad justa para mostrar el producto sin volverlo tecnico ni pesado.",
+      "Antes del 11 de junio. Cuanto antes, mejor, para que el equipo tenga tiempo de cargar.",
   },
 ];
 
@@ -133,15 +98,6 @@ export function LandingPage() {
     return () => window.clearInterval(intervalId);
   }, []);
 
-  const heroPills = useMemo(
-    () => [
-      "Demo enfocada en Modo Simple",
-      "Ranking de muestra incluido",
-      "Modo Live explicado dentro de la propuesta",
-    ],
-    [],
-  );
-
   return (
     <main className={styles.pageShell}>
       <header className={styles.landingTopBar}>
@@ -154,12 +110,11 @@ export function LandingPage() {
             className={styles.headerBrandLogo}
             priority
           />
-          <span>PRODE EMPRESAS DEMO</span>
+          <span>PRODE EMPRESAS</span>
         </Link>
 
         <nav className={styles.landingTopNav} aria-label="Navegacion de producto">
           <a href="#modos-de-juego">Modos de juego</a>
-          <a href="#como-se-puntua">Como se puntua</a>
           <a href="#faq-demo">FAQ</a>
         </nav>
 
@@ -168,7 +123,7 @@ export function LandingPage() {
             Ranking
           </Link>
           <Link href="/mi-prediccion" className={styles.primaryAction}>
-            Ver demo
+            Ver la plataforma
           </Link>
         </div>
       </header>
@@ -219,20 +174,12 @@ export function LandingPage() {
             />
           </div>
 
-          <p className={styles.eyebrow}>Demo del producto</p>
-          <h1 className={styles.heroTitle}>Mostra la plataforma tal como la compraria una empresa</h1>
+          <p className={styles.eyebrow}>Prode corporativo</p>
+          <h1 className={styles.heroTitle}>Vivan el Mundial en equipo</h1>
           <p className={styles.heroCopy}>
-            La demo publica deja visible el Modo Simple para que puedan entender el formato,
-            recorrer la experiencia y ver como se presentaria un ranking interno.
+            Un prode del Mundial 2026 con la cara de tu empresa. Todos juegan y compiten en un
+            ranking interno y la operacion la hacemos nosotros, de principio a fin.
           </p>
-
-          <div className={styles.landingPillRow}>
-            {heroPills.map((pill) => (
-              <span key={pill} className={styles.landingPill}>
-                {pill}
-              </span>
-            ))}
-          </div>
 
           <div className={styles.heroActions}>
             <Link href="/mi-prediccion" className={styles.primaryAction}>
@@ -243,7 +190,7 @@ export function LandingPage() {
             </Link>
             {hasDraft ? (
               <Link href="/mi-prediccion" className={styles.secondaryAction}>
-                Continuar demo
+                Continuar mi prediccion
               </Link>
             ) : null}
           </div>
@@ -253,11 +200,8 @@ export function LandingPage() {
       <section id="modos-de-juego" className={styles.landingInfoSection}>
         <div className={styles.landingSectionHeader}>
           <p className={styles.sectionEyebrow}>Modos de juego</p>
-          <h2>Dos formatos claros para vender el producto</h2>
-          <p>
-            La demo publica queda centrada en el modo simple. El modo live se explica como opcion
-            comercial para empresas que quieran sostener el juego durante todo el torneo.
-          </p>
+          <h2>Dos formas de jugarlo</h2>
+          <p>Elegis la dinamica que mejor encaja con tu equipo y con el ritmo del torneo.</p>
         </div>
 
         <div className={styles.landingInfoGrid}>
@@ -273,37 +217,11 @@ export function LandingPage() {
                   <strong>{mode.title}</strong>
                   <span>{mode.copy}</span>
                 </div>
-                <em>{mode.tag}</em>
               </div>
 
               <ul className={styles.landingInfoList}>
                 {mode.points.map((point) => (
                   <li key={point}>{point}</li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section id="como-se-puntua" className={styles.landingInfoSection}>
-        <div className={styles.landingSectionHeader}>
-          <p className={styles.sectionEyebrow}>Como se puntua</p>
-          <h2>Un sistema consistente entre etapas</h2>
-          <p>
-            El puntaje combina una base fuerte pre-Mundial con una eliminatoria que gana peso a
-            medida que avanza el torneo.
-          </p>
-        </div>
-
-        <div className={styles.landingScoringGrid}>
-          {scoringBlocks.map((block) => (
-            <article key={block.title} className={styles.landingScoringCard}>
-              <p className={styles.landingScoringEyebrow}>{block.subtitle}</p>
-              <strong>{block.title}</strong>
-              <ul className={styles.landingInfoList}>
-                {block.items.map((item) => (
-                  <li key={item}>{item}</li>
                 ))}
               </ul>
             </article>
@@ -317,8 +235,8 @@ export function LandingPage() {
             <p className={styles.sectionEyebrow}>Ranking de muestra</p>
             <h2>Asi se veria la tabla interna para una empresa</h2>
             <p className={styles.heroCopy}>
-              La idea no es simular usuarios reales, sino mostrar de forma clara como se verian el
-              puntaje, las posiciones y el desglose por etapas.
+              Cada persona compite con su nombre y su area en una tabla clara, simple y facil de
+              seguir durante todo el Mundial.
             </p>
           </div>
           <Link href="/ranking" className={styles.secondaryAction}>
@@ -336,17 +254,7 @@ export function LandingPage() {
               </div>
               <div className={styles.demoRankingPreviewPoints}>
                 <strong>{row.total} pts</strong>
-                <span>
-                  {row.groupExactPositionPoints + row.groupTopTwoPoints + row.bestThirdPoints}{" "}
-                  pre-Mundial +{" "}
-                  {row.roundOf32Points +
-                    row.roundOf16Points +
-                    row.quarterFinalPoints +
-                    row.semiFinalPoints +
-                    row.thirdPlaceMatchPoints +
-                    row.finalPoints}{" "}
-                  cuadro
-                </span>
+                <span>Puntaje actual</span>
               </div>
             </article>
           ))}
@@ -356,7 +264,7 @@ export function LandingPage() {
       <section id="faq-demo" className={styles.landingInfoSection}>
         <div className={styles.landingSectionHeader}>
           <p className={styles.sectionEyebrow}>FAQ</p>
-          <h2>Preguntas que conviene responder en la misma demo</h2>
+          <h2>Preguntas frecuentes</h2>
         </div>
 
         <div className={styles.landingFaqGrid}>

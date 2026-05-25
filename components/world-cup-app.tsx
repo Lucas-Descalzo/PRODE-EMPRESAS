@@ -64,9 +64,9 @@ function getFixtureProgress(fixtureState: FixtureState) {
       {
         id: 4 as Step,
         label: "Resumen",
-        meta: remainingKnockout === 0 && allThirdSlotsReady ? "Listo" : "Pend.",
+        meta: remainingKnockout === 0 && allThirdSlotsReady ? "Listo" : "Vista previa",
         done: remainingKnockout === 0 && allThirdSlotsReady,
-        disabled: remainingKnockout > 0 || !allThirdSlotsReady,
+        disabled: false,
       },
     ],
   };
@@ -210,7 +210,7 @@ export function WorldCupApp() {
             />
             <div>
               <strong>Mi prediccion</strong>
-              <span>Demo simple</span>
+              <span>Modo simple</span>
             </div>
           </Link>
 
@@ -278,11 +278,8 @@ export function WorldCupApp() {
             beforeBuilder={
               <section className={styles.fixtureIntro}>
                 <p className={styles.sectionEyebrow}>Modo simple</p>
-                <h1>La version de muestra que veria una empresa</h1>
-                <p>
-                  Esta demo recorre la experiencia pre-Mundial completa: grupos, mejores terceros,
-                  cuadro final y ranking.
-                </p>
+                <h1>Arma tu Mundial</h1>
+                <p>Ordena los grupos, elegi los mejores terceros y completa el cuadro.</p>
               </section>
             }
             summaryActions={
@@ -314,7 +311,7 @@ export function WorldCupApp() {
                       className={styles.secondaryAction}
                       onClick={persistBeforeLeaving}
                     >
-                      Ver ranking demo
+                      Ver ranking
                     </Link>
                   </>
                 )}

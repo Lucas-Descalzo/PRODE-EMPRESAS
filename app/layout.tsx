@@ -23,9 +23,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "PRODE EMPRESAS DEMO",
+  title: "PRODE EMPRESAS",
   description:
-    "Demo corporativa para mostrar el prode interactivo con grupos, rankings y cuadro final compartible.",
+    "Prode del Mundial 2026 para equipos y empresas, con ranking interno y cuadro final compartible.",
 };
 
 export default function RootLayout({
